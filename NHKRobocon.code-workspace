@@ -1,0 +1,25 @@
+{
+	"folders": [
+		{
+			"path": "Geometry_Encoder"
+		},
+		{
+			"path": "MDD"
+		},
+		{
+			"path": "NHKROBOCON_2019"
+		},
+		{
+			"path": "Wheels_Encoder"
+		},
+		{
+			"path": "Gyro"
+		}
+	],
+	"settings": {
+		"terminal.integrated.env.osx": {
+			"PATH": "/Users/ryohei/.platformio/penv/bin:/Users/ryohei/.platformio/penv:/Users/ryohei/anaconda3/bin:/Users/ryohei/anaconda3/condabin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Applications/Xamarin Workbooks.app/Contents/SharedSupport/path-bin",
+			"PLATFORMIO_CALLER": "vscode"
+		}
+	}
+}
