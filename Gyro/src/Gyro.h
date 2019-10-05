@@ -91,10 +91,10 @@ void GYRO::update()
     Serial.print(" qX: ");
     Serial.print(pitch, 4);
     Serial.print(" qY: ");*/
-    /*Serial.print(yaw, 4);
+    /* Serial.print(yaw, 4);
     Serial.print(" ");
     Serial.println(millis()-pre);
-    pre = millis();*/
+    pre = millis(); */
 }
 
 #endif

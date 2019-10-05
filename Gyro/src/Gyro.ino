@@ -25,7 +25,7 @@ void setup(void)
     can.set_send();
     delay(100);
 
-    Interrupt_3ms.begin(gyro_update, 4000);
+    Interrupt_3ms.begin(gyro_update, 3000);  // おかしくなったら4msに変えて
     bno.setExtCrystalUse(true);
 }
 
