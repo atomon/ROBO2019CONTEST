@@ -65,9 +65,9 @@ Vector3f EIGEN_CALC::location(Vector4f vec_odometrys, float previons_angle)
 
 Vector4f EIGEN_CALC::wheel(Vector3f vec_loocal, Vector3f vec_target)
 {
-    theta = vec_loocal[2];
+    theta = vec_loocal[2]; // gyro時10倍
     vec_velocity = vec_target - vec_loocal;
-    vec_velocity /= timer;
+    vec_velocity /= (location_interrupt_timer / 1000);
 
     MatrixXf mat1(4,3);        
     MatrixXf mat2(3,3);
