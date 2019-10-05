@@ -1,4 +1,5 @@
 #include <Teensy_CAN.h>
+#include <Servo.h>
 #include "Cytron_for_Teensy.h"
 
 TEENSY_CAN can(1000000);
@@ -10,8 +11,10 @@ Cytron_T motor5(23, 18, 20000, 11);
 Cytron_T motor6(22, 15, 20000, 11);
 Cytron_T motor7(21, 16, 20000, 11);
 Cytron_T motor8(20, 17, 20000, 11);
+Servo motor9;
+
 //declare array
-int val[4] {};
+int val[9] {};
 
 void setup() 
 {
@@ -25,6 +28,7 @@ void setup()
     motor6.set();
     motor7.set();
     motor8.set();
+    motor9.attach(12); motor9.writeMicroseconds(1500);
     Serial.begin(9600);
 }
 
@@ -35,16 +39,17 @@ void loop()
     tie(val[2], val[3]) = can.read(32);
     tie(val[4], val[5]) = can.read(33);  // tie(Value, Value2) = object name.read(ID);
     tie(val[6], val[7]) = can.read(34);
-    tie(val[8], val[9]) = can.read(35);
+    tie(val[8], ignore) = can.read(35);
     
-    motor1.writeMicroseconds(val[0]);
+    motor5.writeMicroseconds(val[0]);
     motor2.writeMicroseconds(val[1]);
-    motor6.writeMicroseconds(val[2]);
-    motor5.writeMicroseconds(val[3]);
-    //motor5.writeMicroseconds(val[4]);
-    //motor6.writeMicroseconds(val[5]);
-    //motor7.writeMicroseconds(val[6]);
-    //motor8.writeMicroseconds(val[7]);
+    motor1.writeMicroseconds(val[2]);
+    motor6.writeMicroseconds(val[3]);
+    motor7.writeMicroseconds(val[4]); // fr
+    motor4.writeMicroseconds(val[5]); // br
+    motor8.writeMicroseconds(val[6]); // fl
+    motor3.writeMicroseconds(val[7]); // bl
+    motor9.writeMicroseconds(1500+val[8]);
 
     for(int x : val){
         Serial.print(x);
