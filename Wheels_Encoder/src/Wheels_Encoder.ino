@@ -4,10 +4,16 @@
 //declare object
 ENCODERS myEncoder;
 TEENSY_CAN can(1000000); //set baud
+//IntervalTimer Interrupt_700us;
 
 //declare array
 int id[2] = {1, 2}; // set ID
 int w[4];
+
+void update(){
+    
+    
+}
 
 void setup() {
 
@@ -19,27 +25,26 @@ void setup() {
     myEncoder.Encoder3.set(3200);
     myEncoder.Encoder4.set(3200);
     myEncoder.Encoder6.set(3200);
-  
-}
-int l=0;
-void loop() {
 
+    //Interrupt_700us.begin(update, 700);
+}
+
+void loop() {
     //Read rpm
-    w[0] = -myEncoder.Encoder3.read_rpm();
-    w[1] = -myEncoder.Encoder1.read_rpm();
-    w[2] = -myEncoder.Encoder4.read_rpm();
-    w[3] = -myEncoder.Encoder6.read_rpm();
+    w[0] = -myEncoder.Encoder6.read_rpm();
+    w[1] = -myEncoder.Encoder3.read_rpm();
+    w[2] = -myEncoder.Encoder1.read_rpm();
+    w[3] = -myEncoder.Encoder4.read_rpm();
 
     //Send together two data with CAN
     can.dual_send(id, w, 4);  //(ID[array], value[array], number of data)
   
     //Serial monitoring
-    for(int x : w){
+    /*for(int x : w){
         Serial.print(x);
         Serial.print(" ");
     }
-    Serial.println();
-    delayMicroseconds(1000);
-
+    Serial.println();*/
+    delayMicroseconds(800);
 }
 
