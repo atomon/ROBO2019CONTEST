@@ -96,8 +96,6 @@ Vector4f PID_VECTOR4F::update(Vector4f local_val, Vector4f target_val){
     pid_res.row(2)  = (pid_res.row(0)- res_prep.row(0)) / dt;
 
     res_prep = pid_res;
-    /*Serial.print(pid_res(0, 0));
-    Serial.print(" ");*/\
     pid_res2 = pid_gain * pid_res;
     result_Value << pid_res2(0,0), pid_res2(1,1), pid_res2(2,2), pid_res2(3,3);
     //print_mtxf(result_Value);
