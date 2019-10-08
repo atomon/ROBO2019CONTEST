@@ -22,7 +22,6 @@ using namespace std;
 using namespace Eigen;
 
 //declare object
-TEENSY_CAN can(1000000); // baud setting
 PID_VECTOR4F pid_wheel(matrin(arrays));
 EIGEN_CALC eigen_calc;
 
@@ -57,13 +56,15 @@ class MOVE
 
         float pre_theta = 0.0;
 
+        int negation = 1; // zone変更時にx座標を反転
+
         int i = 0;
 
     public:
 
         MOVE();
 
-        void set_target(vector<int> _x, vector<int> _y, float _theta);
+        void set_target(vector<int> _x, vector<int> _y, float _theta, int _negation = 1);
 
         void target_update();
 
@@ -79,11 +80,12 @@ class MOVE
 
 MOVE::MOVE(){}
 
-void MOVE::set_target(vector<int> _x, vector<int> _y, float _theta)
+void MOVE::set_target(vector<int> _x, vector<int> _y, float _theta, int _negation)
 {
     location_x = _x;
     location_y = _y;
     target_theta = _theta;
+    negation = _negation;
     i = 0;
 }
 
@@ -109,7 +111,7 @@ void MOVE::target_update()
     //target location
     //if(++i > (int)location_y.size()-1) i = (int)location_y.size()-1; //最初に足し算してるので目標座標の０番は実行されない
     if(++i > (int)location_y.size()-1) i = (int)location_y.size()-1; //最初に足し算してるので目標座標の０番は実行されない
-    vec_location_target << location_x[i] * (odometry_R / 8192.0), location_y[i] * (odometry_R / 8192.0), target_theta;
+    vec_location_target << negation * location_x[i] * (odometry_R / 8192.0), location_y[i] * (odometry_R / 8192.0), target_theta;
 
     //各ホイールの回転数を計算
     vec_target_rpm = eigen_calc.wheel(vec_location, vec_location_target);
@@ -142,7 +144,7 @@ void MOVE::feedback()
 bool MOVE::process_end()
 {
     int val = 0b000;
-    val |= ((vec_location[0] < location_x.back() * (odometry_R / 8192.0) + error_range) && (vec_location[0] > location_x.back() * (odometry_R / 8192.0) - error_range))? 0b001 : 0b000;
+    val |= ((vec_location[0] < negation * location_x.back() * (odometry_R / 8192.0) + error_range) && (vec_location[0] > negation * location_x.back() * (odometry_R / 8192.0) - error_range))? 0b001 : 0b000;
     val |= ((vec_location[1] < location_y.back() * (odometry_R / 8192.0) + error_range) && (vec_location[1] > location_y.back() * (odometry_R / 8192.0) - error_range))? 0b010 : 0b000;
     val |= ((theta < target_theta + error_range_angle) && (theta > target_theta - error_range_angle))? 0b100 : 0b000;
     
