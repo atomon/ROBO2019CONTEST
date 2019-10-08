@@ -14,7 +14,7 @@ Cytron_T motor8(20, 17, 20000, 11);
 Servo motor9;
 
 //declare array
-int val[9] {};
+int val[10] {};
 
 void setup() 
 {
@@ -40,16 +40,31 @@ void loop()
     tie(val[4], val[5]) = can.read(33);  // tie(Value, Value2) = object name.read(ID);
     tie(val[6], val[7]) = can.read(34);
     tie(val[8], ignore) = can.read(35);
-    
-    motor5.writeMicroseconds(val[0]);
-    motor2.writeMicroseconds(val[1]);
-    motor1.writeMicroseconds(val[2]);
-    motor6.writeMicroseconds(val[3]);
-    motor7.writeMicroseconds(val[4]); // fr
-    motor4.writeMicroseconds(val[5]); // br
-    motor8.writeMicroseconds(val[6]); // fl
-    motor3.writeMicroseconds(val[7]); // bl
-    motor9.writeMicroseconds(1500+val[8]);
+    tie(val[9], ignore) = can.read(0);
+
+    if(val[9]){
+        motor5.writeMicroseconds(val[0]);
+        motor2.writeMicroseconds(val[1]);
+        motor1.writeMicroseconds(val[2]);
+        motor6.writeMicroseconds(val[3]);
+        motor7.writeMicroseconds(val[4]); // fr
+        motor4.writeMicroseconds(val[5]); // br
+        motor8.writeMicroseconds(val[6]); // fl
+        motor3.writeMicroseconds(val[7]); // bl
+        motor9.writeMicroseconds(1500+val[8]);
+    }
+    else {
+        motor5.writeMicroseconds(0);
+        motor2.writeMicroseconds(0);
+        motor1.writeMicroseconds(0);
+        motor6.writeMicroseconds(0);
+        motor7.writeMicroseconds(0); // fr
+        motor4.writeMicroseconds(0); // br
+        motor8.writeMicroseconds(0); // fl
+        motor3.writeMicroseconds(0); // bl
+        motor9.writeMicroseconds(1500);
+    }
+
 
     for(int x : val){
         Serial.print(x);
