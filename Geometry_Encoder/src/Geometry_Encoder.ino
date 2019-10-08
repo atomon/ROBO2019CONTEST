@@ -4,7 +4,7 @@
 //declare object
 ENCODERS myEncoder;
 TEENSY_CAN can(1000000); //set baud
-IntervalTimer Interrupt_1ms;
+IntervalTimer Interrupt_5ms;
 
 //declare array
 int id[1] {3}; // set ID
@@ -32,7 +32,7 @@ void setup() {
     myEncoder.Encoder3.set(8192);
     myEncoder.Encoder5.set(8192);
 
-    Interrupt_1ms.begin(update, 2000);
+    Interrupt_5ms.begin(update, 5000);
 
 }
 
