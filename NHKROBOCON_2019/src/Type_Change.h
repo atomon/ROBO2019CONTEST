@@ -17,4 +17,9 @@ int* Vector4f_int(Vector4f vector4f)
     return Type_change_Vector4f_int;
 }
 
+Matrix<float, 4, 3> matrin(float arr[12]){
+    
+    return Map<Matrix<float, 4, 3, RowMajor> >(arr);
+}
+
 #endif
