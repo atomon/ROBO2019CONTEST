@@ -2,9 +2,11 @@
 #define TIMER_INTERRUPT_H
 
 #include "move.h"
+#include "Nose.h"
 
 IntervalTimer wheel_uppdate_timer;
 IntervalTimer wheel_timer;
+IntervalTimer zou_timer;
 
 void wheel_taeget_update();
 void wheel_feedback();
@@ -29,6 +31,25 @@ void wheel_taeget_update()
 void wheel_feedback()
 {
     moving.feedback();
+}
+
+// zou interrupt
+
+void zou_feedback();
+
+void begin_interval_zou()
+{
+    zou_timer.begin(zou_feedback, zou_interrupt_time * 1000);              // wheel_feedback  cycle :   2000  ms
+}
+
+void end_interval_zou()
+{
+    zou_timer.end();         // end wheel_feedback
+}
+
+void zou_feedback()
+{
+    nose.feedback();
 }
 
 #endif
