@@ -7,7 +7,7 @@ TEENSY_CAN can(1000000);
 #include <utility/imumaths.h>
 #include "Gyro.h"
 
-IntervalTimer Interrupt_3ms;
+IntervalTimer Interrupt_5ms;
 GYRO gyro;
 
 int id[4] {21};      // set ID
@@ -25,7 +25,7 @@ void setup(void)
     can.set_send();
     delay(100);
 
-    Interrupt_3ms.begin(gyro_update, 3000);  // おかしくなったら4msに変えて
+    Interrupt_5ms.begin(gyro_update, 5000);  // おかしくなったら4msに変えて
     bno.setExtCrystalUse(true);
 }
 
